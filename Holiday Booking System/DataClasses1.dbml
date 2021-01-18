@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DataSource" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=sql-server;User ID=ka5054d" SettingsObjectName="Holiday_Booking_System.Properties.Settings" SettingsPropertyName="DataSourceConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Department" Member="Departments">
+    <Type Name="Department">
+      <Column Name="Departmentid" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Department_name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Department_Employee" Member="Employees" ThisKey="Departmentid" OtherKey="Departmentid" Type="Employee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HolidayEntitlement" Member="HolidayEntitlements">
+    <Type Name="HolidayEntitlement">
+      <Column Name="HolidayEntitlementID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EmployeeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Entitlement_days_left" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Extra_days" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Employee_HolidayEntitlement" Member="Employee" ThisKey="EmployeeID" OtherKey="Employee_id" Type="Employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Role" Member="Roles">
+    <Type Name="Role">
+      <Column Name="Roleid" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Role_name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_Employee" Member="Employees" ThisKey="Roleid" OtherKey="Roleid" Type="Employee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HolidayReqConstraints" Member="HolidayReqConstraints">
+    <Type Name="HolidayReqConstraint">
+      <Column Name="HolidayReqConstraintsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="HolidayRequestID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ConstraintID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Constraint_HolidayReqConstraint" Member="Constraint" ThisKey="ConstraintID" OtherKey="ConstraintID" Type="Constraint" IsForeignKey="true" />
+      <Association Name="HolidayRequest_HolidayReqConstraint" Member="HolidayRequest" ThisKey="HolidayRequestID" OtherKey="HolidayRequestID" Type="HolidayRequest" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Constraint]" Member="Constraints">
+    <Type Name="Constraint">
+      <Column Name="ConstraintID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Constraint_HolidayReqConstraint" Member="HolidayReqConstraints" ThisKey="ConstraintID" OtherKey="ConstraintID" Type="HolidayReqConstraint" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employee_view" Member="Employee_views">
+    <Type Name="Employee_view">
+      <Column Name="Employee_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="First_name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Last_name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Role_name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Department_name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="is_admin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="on_duty" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="date_joined" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Phone_number" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HolidayReq_View" Member="HolidayReq_Views">
+    <Type Name="HolidayReq_View">
+      <Column Name="HolidayRequestID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="start_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="end_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="approved" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HolidayRequest" Member="HolidayRequests">
+    <Type Name="HolidayRequest">
+      <Column Name="HolidayRequestID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EmployeeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="start_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="end_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="approved" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="HolidayRequest_HolidayReqConstraint" Member="HolidayReqConstraints" ThisKey="HolidayRequestID" OtherKey="HolidayRequestID" Type="HolidayReqConstraint" />
+      <Association Name="Employee_HolidayRequest" Member="Employee" ThisKey="EmployeeID" OtherKey="Employee_id" Type="Employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Constraints_View" Member="Constraints_Views">
+    <Type Name="Constraints_View">
+      <Column Name="start_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="end_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="approved" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="ConstraintDetails" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="EmployeeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HolidayRequestID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ConstraintID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employee" Member="Employees">
+    <Type Name="Employee">
+      <Column Name="Employee_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="First_name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Last_name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Departmentid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Roleid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="is_admin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="on_duty" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="date_joined" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Phone_number" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Association Name="Employee_HolidayEntitlement" Member="HolidayEntitlements" ThisKey="Employee_id" OtherKey="EmployeeID" Type="HolidayEntitlement" />
+      <Association Name="Employee_HolidayRequest" Member="HolidayRequests" ThisKey="Employee_id" OtherKey="EmployeeID" Type="HolidayRequest" />
+      <Association Name="Department_Employee" Member="Department" ThisKey="Departmentid" OtherKey="Departmentid" Type="Department" IsForeignKey="true" />
+      <Association Name="Role_Employee" Member="Role" ThisKey="Roleid" OtherKey="Roleid" Type="Role" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
